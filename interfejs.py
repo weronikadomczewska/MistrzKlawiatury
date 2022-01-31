@@ -22,21 +22,20 @@ class Interfejs():
         self.okno.fill(self.KOLOR_TLA)
         pygame.display.set_caption("Mistrz Klawiatury")
 
-        napis = self.czcionka.render("To be", True, self.KOLOR_LITER, self.KOLOR_TLA)
-        napis1 = self.czcionka.render("or not to be", True, self.KOLOR_LITER, self.KOLOR_TLA)
-
         while True:
-            self.okno.blit(napis, (0, 0))
-            self.okno.blit(napis1, (50, 50))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     quit()
-                pygame.display.update()
+            
+            self.okno.fill(self.KOLOR_TLA)
+            self.wyswietl_slowa("ala", 0, 0)
+            pygame.display.update()
+                
 
-    def wyswietl_slowa(self, slowa):
-        wysokosc_litery = self.WYSOKOSC - 50
-        przesuniecie = 10
+    def wyswietl_slowa(self, slowo, x, y):
+        napis = self.czcionka.render(slowo, True, self.KOLOR_LITER)
+        self.okno.blit(napis, (x, y))
 
 
 
