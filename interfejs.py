@@ -1,34 +1,29 @@
 import pygame
 from random import choice
+from gra import Gra
 
 class Interfejs():
 
-    SLOWA = []
-    with open("slowa.txt", "r", encoding="UTF-8") as plik:
-        SLOWA = [s.strip() for s in plik]
-
     ROZMIAR_CZCIONKI = 14
+    SZEROKOSC = 600
+    WYSOKOSC = 400
+    KOLOR_TLA = "#121212"
+    KOLOR_LITER = "#9AE66E"
     
-    def __init__(self) -> None:
-        self.szerokosc = 600
-        self.wysokosc = 400
-        self.kolor_tla = "#121212"
-        self.kolor_liter = "#9AE66E"
-
-        pygame.font.init()
-        self.czcionka = pygame.font.SysFont("couriernew", self.ROZMIAR_CZCIONKI)
-        self.okno = pygame.display.set_mode((self.szerokosc, self.wysokosc))
+    def __init__(self, gra : Gra) -> None:
 
         pygame.init()
 
         #tworzenie i edycja okna gry
-        pygame.display.set_caption("Mistrz Klawiatury")
-        self.okno.fill(self.kolor_tla)
         
-        napis = self.czcionka.render("Happy birthday", True, self.kolor_liter, self.kolor_tla)
-        napis1 = self.czcionka.render("To you!", True, self.kolor_liter, self.kolor_tla)
+        pygame.font.init()
+        self.czcionka = pygame.font.SysFont("couriernew", self.ROZMIAR_CZCIONKI)
+        self.okno = pygame.display.set_mode((self.SZEROKOSC, self.WYSOKOSC))
+        self.okno.fill(self.KOLOR_TLA)
+        pygame.display.set_caption("Mistrz Klawiatury")
 
-
+        napis = self.czcionka.render("To be", True, self.KOLOR_LITER, self.KOLOR_TLA)
+        napis1 = self.czcionka.render("or not to be", True, self.KOLOR_LITER, self.KOLOR_TLA)
 
         while True:
             self.okno.blit(napis, (0, 0))
@@ -40,7 +35,7 @@ class Interfejs():
                 pygame.display.update()
 
     def wyswietl_slowa(self, slowa):
-        wysokosc_litery = self.wysokosc - 50
+        wysokosc_litery = self.WYSOKOSC - 50
         przesuniecie = 10
 
 
