@@ -62,10 +62,32 @@ class Interfejs():
         self.okno.fill(self.KOLOR_TLA)
         pygame.draw.line(self.okno, self.KOLOR_LITER, (0, self.WYSOKOSC - self.WYSOKOSC // 5), (self.SZEROKOSC, self.WYSOKOSC - self.WYSOKOSC //5))
 
+        x = 0
+        y = 0
+
+        self.czcionka = pygame.font.SysFont(self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_SLOWA)
+
+        for slowo in gra.wylosowane_slowa:
+ 
+            napis = self.czcionka.render(slowo, True, self.KOLOR_LITER)
+            szerokosc_slowa = napis.get_width()
+            wysokosc_slowa = napis.get_height()
+
+            maks_szerokosc = self.SZEROKOSC
+
+            if maks_szerokosc <= szerokosc_slowa:
+                y += wysokosc_slowa
+                x = 0
+
+            self.wyswietl_slowo(slowo, self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_SLOWA, x, y)
+            maks_szerokosc -= szerokosc_slowa
+
+            self.okno.blit(napis, (x, y))
+
     def rysuj_scene_koniec(self, gra):
         self.okno.fill(self.KOLOR_TLA)
         self.wyswietl_slowo("KONIEC GRY", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_POLECENIA, self.SZEROKOSC // 2 - self.SZEROKOSC // 8, self.WYSOKOSC // 10)
-        self.wyswietl_slowo(f"Słowa na minutę (WPM): {gra.slowa_na_minute}", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_POLECENIA, self.SZEROKOSC // 2 - self.SZEROKOSC // 4, self.WYSOKOSC // 5)
+        self.wyswietl_slowo(f"Słowa na minutę (WPM): {gra.wpisane_slowa // 60}", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_POLECENIA, self.SZEROKOSC // 2 - self.SZEROKOSC // 4, self.WYSOKOSC // 5)
 
         try:
             ostatni_wynik = ""
@@ -81,7 +103,3 @@ class Interfejs():
 
         with open("wyniki.txt", "w") as plik:
             plik.write(str(gra.slowa_na_minute))
-
-
-
-

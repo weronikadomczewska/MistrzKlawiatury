@@ -9,10 +9,10 @@ class Gra():
 
     def __init__(self) -> None:
         self.wpisane_slowa = 0
-        self.slowa_na_minute = 0
         self.pisane_slowo = ""
         self.teksty_na_ekranie = []
         self.stan = 0
+        self.czas_rozgrywki = 0
 
         self.slowa = []
         with open("slowa.txt", "r", encoding="UTF-8") as plik:
