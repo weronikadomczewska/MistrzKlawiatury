@@ -4,11 +4,11 @@ from gra import Gra
 
 class Interfejs():
 
-    ROZMIAR_CZCIONKI_SLOWA = 14
+    ROZMIAR_CZCIONKI_SLOWA = 20
     ROZMIAR_CZCIONKI_POLECENIA = 20
     TYP_CZCIONKI = "couriernew"
-    SZEROKOSC = 600
-    WYSOKOSC = 400
+    SZEROKOSC_OKNA = 600
+    WYSOKOSC_OKNA = 400
     KOLOR_TLA = "#181818"
     KOLOR_LITER = "#C7F994"
     
@@ -19,8 +19,9 @@ class Interfejs():
         #tworzenie i edycja okna gry
         
         pygame.font.init()
-        self.czcionka = pygame.font.SysFont("couriernew", self.ROZMIAR_CZCIONKI_SLOWA)
-        self.okno = pygame.display.set_mode((self.SZEROKOSC, self.WYSOKOSC))
+        self.czcionka_mala = pygame.font.SysFont("couriernew", self.ROZMIAR_CZCIONKI_SLOWA)
+        self.czcionka_duza = pygame.font.SysFont("couriernew", self.ROZMIAR_CZCIONKI_POLECENIA)
+        self.okno = pygame.display.set_mode((self.SZEROKOSC_OKNA, self.WYSOKOSC_OKNA))
         self.okno.fill(self.KOLOR_TLA)
         pygame.display.set_caption("Mistrz Klawiatury")
 
@@ -48,46 +49,42 @@ class Interfejs():
             # NOTE: jak już narysowaliśmy, to RAZ wyświetlamy to co narysowaliśmy
             pygame.display.update()
                 
-    def wyswietl_slowo(self, slowo, rodzaj_czcionki, rozmiar_czcionki,  x, y):
-        self.czcionka = pygame.font.SysFont(rodzaj_czcionki, rozmiar_czcionki)
-        napis = self.czcionka.render(slowo, True, self.KOLOR_LITER)
+    def wyswietl_slowo(self, slowo, rodzaj_czcionki, x, y, mala_czcionka=True):
+        if mala_czcionka:
+            napis = self.czcionka_mala.render(slowo, True, self.KOLOR_LITER)
+        else:
+            napis = self.czcionka_duza.render(slowo, True, self.KOLOR_LITER)
         self.okno.blit(napis, (x, y))
 
     def rysuj_scene_poczatek(self):
         self.okno.fill(self.KOLOR_TLA)
-        self.wyswietl_slowo("MISTRZ KLAWIATURY", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_POLECENIA, self.SZEROKOSC // 3, self.WYSOKOSC // 10)
-        self.wyswietl_slowo("Naciśnij spację, aby rozpocząć", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_POLECENIA, self.SZEROKOSC // 5, self.WYSOKOSC // 2)
+        self.wyswietl_slowo("MISTRZ KLAWIATURY", self.TYP_CZCIONKI, self.SZEROKOSC_OKNA // 3, self.WYSOKOSC_OKNA // 10)
+        self.wyswietl_slowo("Naciśnij spację, aby rozpocząć", self.TYP_CZCIONKI, self.SZEROKOSC_OKNA // 5, self.WYSOKOSC_OKNA // 2, False)
 
     def rysuj_scene_gra(self, gra):
         self.okno.fill(self.KOLOR_TLA)
-        pygame.draw.line(self.okno, self.KOLOR_LITER, (0, self.WYSOKOSC - self.WYSOKOSC // 5), (self.SZEROKOSC, self.WYSOKOSC - self.WYSOKOSC //5))
+        pygame.draw.line(self.okno, self.KOLOR_LITER, (0, self.WYSOKOSC_OKNA - self.WYSOKOSC_OKNA // 5), (self.SZEROKOSC_OKNA, self.WYSOKOSC_OKNA - self.WYSOKOSC_OKNA //5))
 
         x = 0
         y = 0
 
-        self.czcionka = pygame.font.SysFont(self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_SLOWA)
-
         for slowo in gra.wylosowane_slowa:
  
-            napis = self.czcionka.render(slowo, True, self.KOLOR_LITER)
+            napis = self.czcionka_mala.render(slowo + " ", True, self.KOLOR_LITER)
             szerokosc_slowa = napis.get_width()
             wysokosc_slowa = napis.get_height()
 
-            maks_szerokosc = self.SZEROKOSC
-
-            if maks_szerokosc <= szerokosc_slowa:
-                y += wysokosc_slowa
+            if x + szerokosc_slowa >= self.SZEROKOSC_OKNA:
+                y += wysokosc_slowa 
                 x = 0
 
-            self.wyswietl_slowo(slowo, self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_SLOWA, x, y)
-            maks_szerokosc -= szerokosc_slowa
-
-            self.okno.blit(napis, (x, y))
+            self.wyswietl_slowo(slowo + " ", self.TYP_CZCIONKI, x, y)
+            x += szerokosc_slowa
 
     def rysuj_scene_koniec(self, gra):
         self.okno.fill(self.KOLOR_TLA)
-        self.wyswietl_slowo("KONIEC GRY", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_POLECENIA, self.SZEROKOSC // 2 - self.SZEROKOSC // 8, self.WYSOKOSC // 10)
-        self.wyswietl_slowo(f"Słowa na minutę (WPM): {gra.wpisane_slowa // 60}", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_POLECENIA, self.SZEROKOSC // 2 - self.SZEROKOSC // 4, self.WYSOKOSC // 5)
+        self.wyswietl_slowo("KONIEC GRY", self.TYP_CZCIONKI, self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 8, self.WYSOKOSC_OKNA // 10, False)
+        self.wyswietl_slowo(f"Słowa na minutę (WPM): {gra.wpisane_slowa // 60}", self.TYP_CZCIONKI, self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 4, self.WYSOKOSC_OKNA // 5, False)
 
         try:
             ostatni_wynik = ""
@@ -96,10 +93,10 @@ class Interfejs():
         except:
             ostatni_wynik = "0"
 
-        self.wyswietl_slowo(f"Słowa na minutę (WPM): {gra.slowa_na_minute}", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_POLECENIA, self.SZEROKOSC // 2 - self.SZEROKOSC // 4, self.WYSOKOSC // 5)
-        self.wyswietl_slowo(f"Ostatni wynik: {ostatni_wynik}", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_POLECENIA, self.SZEROKOSC // 2 - self.SZEROKOSC // 4, self.WYSOKOSC // 3)
+        self.wyswietl_slowo(f"Słowa na minutę (WPM): {gra.slowa_na_minute}", self.TYP_CZCIONKI, self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 4, self.WYSOKOSC_OKNA // 5, False)
+        self.wyswietl_slowo(f"Ostatni wynik: {ostatni_wynik}", self.TYP_CZCIONKI, self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 4, self.WYSOKOSC_OKNA // 3, False)
 
-        self.wyswietl_slowo("NACIŚNIJ SPACJĘ, ABY ZAGRAĆ PONOWNIE", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_POLECENIA, self.SZEROKOSC // 2 - self.SZEROKOSC // 3, self.WYSOKOSC // 2 + self.WYSOKOSC // 3)
+        self.wyswietl_slowo("NACIŚNIJ SPACJĘ, ABY ZAGRAĆ PONOWNIE", self.TYP_CZCIONKI, self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 3, self.WYSOKOSC_OKNA // 2 + self.WYSOKOSC_OKNA // 3, False)
 
         with open("wyniki.txt", "w") as plik:
             plik.write(str(gra.slowa_na_minute))
