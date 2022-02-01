@@ -21,11 +21,12 @@ class Gra():
         if self.stan == self.POCZATEK:
             if klawisz == pygame.K_SPACE:
                 self.stan = self.GRA
-        elif self.state == self.GRA:
+        elif self.stan == self.GRA:
             if len(self.teksty_na_ekranie) == 0:
                 self.stan = self.KONIEC
-        elif self.state == self.KONIEC:
-            pass
+        elif self.stan == self.KONIEC:
+            if klawisz == pygame.K_SPACE:
+                self.stan = self.POCZATEK
         else:
             raise Exception("coś poszło bardzo nie tak")
 

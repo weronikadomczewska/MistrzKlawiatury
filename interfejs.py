@@ -9,8 +9,8 @@ class Interfejs():
     TYP_CZCIONKI = "couriernew"
     SZEROKOSC = 600
     WYSOKOSC = 400
-    KOLOR_TLA = "#121212"
-    KOLOR_LITER = "#9AE66E"
+    KOLOR_TLA = "#181818"
+    KOLOR_LITER = "#C7F994"
     
     def __init__(self, gra : Gra) -> None:
 
@@ -66,15 +66,32 @@ class Interfejs():
 
     def rysuj_scene_poczatek(self):
         self.okno.fill(self.KOLOR_TLA)
-        self.wyswietl_slowo("Mistrz Klawiatury", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_POLECENIA, self.SZEROKOSC // 3, self.WYSOKOSC // 10)
+        self.wyswietl_slowo("MISTRZ KLAWIATURY", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_POLECENIA, self.SZEROKOSC // 3, self.WYSOKOSC // 10)
         self.wyswietl_slowo("Naciśnij spację, aby rozpocząć", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_POLECENIA, self.SZEROKOSC // 5, self.WYSOKOSC // 2)
 
     def rysuj_scene_gra(self, gra):
         self.okno.fill(self.KOLOR_TLA)
+        pygame.draw.line(self.okno, self.KOLOR_LITER, (0, self.WYSOKOSC - self.WYSOKOSC // 5), (self.SZEROKOSC, self.WYSOKOSC - self.WYSOKOSC //5))
 
     def rysuj_scene_koniec(self, gra):
-        pass
+        self.okno.fill(self.KOLOR_TLA)
+        self.wyswietl_slowo("KONIEC GRY", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_POLECENIA, self.SZEROKOSC // 2 - self.SZEROKOSC // 8, self.WYSOKOSC // 10)
+        self.wyswietl_slowo(f"Słowa na minutę (WPM): {gra.slowa_na_minute}", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_POLECENIA, self.SZEROKOSC // 2 - self.SZEROKOSC // 4, self.WYSOKOSC // 5)
 
+        try:
+            ostatni_wynik = ""
+            with open("wyniki.txt", "r") as plik:
+                ostatni_wynik = plik.readline().strip()
+        except:
+            ostatni_wynik = "0"
+
+        self.wyswietl_slowo(f"Słowa na minutę (WPM): {gra.slowa_na_minute}", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_POLECENIA, self.SZEROKOSC // 2 - self.SZEROKOSC // 4, self.WYSOKOSC // 5)
+        self.wyswietl_slowo(f"Ostatni wynik: {ostatni_wynik}", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_POLECENIA, self.SZEROKOSC // 2 - self.SZEROKOSC // 4, self.WYSOKOSC // 3)
+
+        self.wyswietl_slowo("NACIŚNIJ SPACJĘ, ABY ZAGRAĆ PONOWNIE", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_POLECENIA, self.SZEROKOSC // 2 - self.SZEROKOSC // 3, self.WYSOKOSC // 2 + self.WYSOKOSC // 3)
+
+        with open("wyniki.txt", "w") as plik:
+            plik.write(str(gra.slowa_na_minute))
 
 
 
