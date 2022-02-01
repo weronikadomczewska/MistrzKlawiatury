@@ -24,16 +24,6 @@ class Interfejs():
         self.okno.fill(self.KOLOR_TLA)
         pygame.display.set_caption("Mistrz Klawiatury")
 
-        # while True:
-        #     for event in pygame.event.get():
-        #         if event.type == pygame.QUIT:
-        #             pygame.quit()
-        #             quit()
-            
-        #     self.okno.fill(self.KOLOR_TLA)
-        #     self.wyswietl_slowo("ala", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_SLOWA, 0, 0)
-        #     pygame.display.update()
-
         self.petla_gry(gra)
 
     def petla_gry(self, gra):
@@ -58,7 +48,6 @@ class Interfejs():
             # NOTE: jak już narysowaliśmy, to RAZ wyświetlamy to co narysowaliśmy
             pygame.display.update()
                 
-
     def wyswietl_slowo(self, slowo, rodzaj_czcionki, rozmiar_czcionki,  x, y):
         self.czcionka = pygame.font.SysFont(rodzaj_czcionki, rozmiar_czcionki)
         napis = self.czcionka.render(slowo, True, self.KOLOR_LITER)
