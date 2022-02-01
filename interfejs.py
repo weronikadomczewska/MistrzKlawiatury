@@ -34,7 +34,9 @@ class Interfejs():
         #     self.wyswietl_slowo("ala", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_SLOWA, 0, 0)
         #     pygame.display.update()
 
-    def petla_gry(self):
+        self.petla_gry(gra)
+
+    def petla_gry(self, gra):
 
         while True:
             # NOTE: obsługujemy zdarzenia
@@ -46,12 +48,12 @@ class Interfejs():
                     self.gra.nacisnieto_klawisz(event.key)
         
             # NOTE: na podstawie stanu gry rysujemy konkretną scenę
-            if self.gra.stan == Gra.POCZATEK:
-                self.rysuj_scene_poczatek(self, self.gra)
-            elif self.gra.stan == Gra.GRA:
-                self.rysuj_scene_gra(self, self.gra)
-            elif self.gra.stan == Gra.KONIEC:
-                self.rysuj_scene_koniec(self, self.gra)
+            if gra.stan == Gra.POCZATEK:
+                self.rysuj_scene_poczatek(gra)
+            elif gra.stan == Gra.GRA:
+                self.rysuj_scene_gra(gra)
+            elif gra.stan == Gra.KONIEC:
+                self.rysuj_scene_koniec(gra)
             else:
                 raise Exception("błędny stan, coś jest nie tak")
         
@@ -65,7 +67,9 @@ class Interfejs():
         self.okno.blit(napis, (x, y))
 
     def rysuj_scene_poczatek(self, gra):
-        self.wyswietl_slowo("Mistrz Klawiatury!", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_POLECENIA, 20, 20)
+        self.okno.fill(self.KOLOR_TLA)
+        self.wyswietl_slowo("Mistrz Klawiatury", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_POLECENIA, self.SZEROKOSC // 3, self.WYSOKOSC // 10)
+        self.wyswietl_slowo("Naciśnij spację, aby rozpocząć", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_POLECENIA, self.SZEROKOSC // 5, self.WYSOKOSC // 2)
 
     def rysuj_scene_gra(self, gra):
         pass
