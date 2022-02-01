@@ -18,12 +18,12 @@ class Gra():
             self.slowa = [s.strip() for s in plik]
 
     def nacisnieto_klawisz(self, klawisz):
-        if self.state == self.POCZATEK:
+        if self.stan == self.POCZATEK:
             if klawisz == pygame.K_SPACE:
-                # TODO: przejście do stanu GRA
-                pass
+                self.stan = self.GRA
         elif self.state == self.GRA:
-            pass
+            if len(self.teksty_na_ekranie) == 0:
+                self.stan = self.KONIEC
         elif self.state == self.KONIEC:
             pass
         else:

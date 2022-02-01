@@ -37,19 +37,17 @@ class Interfejs():
         self.petla_gry(gra)
 
     def petla_gry(self, gra):
-
         while True:
             # NOTE: obsługujemy zdarzenia
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
+            for zdarzenie in pygame.event.get():
+                if zdarzenie.type == pygame.QUIT:
                     pygame.quit()
                     quit()
-                if event.type == pygame.KEYDOWN:
-                    self.gra.nacisnieto_klawisz(event.key)
-        
+                if zdarzenie.type == pygame.KEYDOWN:
+                    gra.nacisnieto_klawisz(zdarzenie.key)
             # NOTE: na podstawie stanu gry rysujemy konkretną scenę
             if gra.stan == Gra.POCZATEK:
-                self.rysuj_scene_poczatek(gra)
+                self.rysuj_scene_poczatek()
             elif gra.stan == Gra.GRA:
                 self.rysuj_scene_gra(gra)
             elif gra.stan == Gra.KONIEC:
@@ -66,13 +64,13 @@ class Interfejs():
         napis = self.czcionka.render(slowo, True, self.KOLOR_LITER)
         self.okno.blit(napis, (x, y))
 
-    def rysuj_scene_poczatek(self, gra):
+    def rysuj_scene_poczatek(self):
         self.okno.fill(self.KOLOR_TLA)
         self.wyswietl_slowo("Mistrz Klawiatury", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_POLECENIA, self.SZEROKOSC // 3, self.WYSOKOSC // 10)
         self.wyswietl_slowo("Naciśnij spację, aby rozpocząć", self.TYP_CZCIONKI, self.ROZMIAR_CZCIONKI_POLECENIA, self.SZEROKOSC // 5, self.WYSOKOSC // 2)
 
     def rysuj_scene_gra(self, gra):
-        pass
+        self.okno.fill(self.KOLOR_TLA)
 
     def rysuj_scene_koniec(self, gra):
         pass
