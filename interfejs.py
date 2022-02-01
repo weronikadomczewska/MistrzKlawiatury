@@ -95,19 +95,11 @@ class Interfejs():
     def rysuj_scene_koniec(self, gra):
         self.okno.fill(self.KOLOR_TLA)
         self.wyswietl_slowo("KONIEC GRY", self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 8, self.WYSOKOSC_OKNA // 10, False)
-        self.wyswietl_slowo(f"Słowa na minutę (WPM): {gra.wpisane_slowa // 60}", self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 4, self.WYSOKOSC_OKNA // 5, False)
-
-        try:
-            ostatni_wynik = ""
-            with open("wyniki.txt", "r") as plik:
-                ostatni_wynik = plik.readline().strip()
-        except:
-            ostatni_wynik = "0"
 
         self.wyswietl_slowo(f"Słowa na minutę (WPM): {gra.slowa_na_minute}", self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 4, self.WYSOKOSC_OKNA // 5, False)
-        self.wyswietl_slowo(f"Ostatni wynik: {ostatni_wynik}", self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 4, self.WYSOKOSC_OKNA // 3, False)
+        self.wyswietl_slowo(f"Ostatni wynik: {gra.ostatni_wynik}", self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 4, self.WYSOKOSC_OKNA // 3, False)
 
-        self.wyswietl_slowo("NACIŚNIJ SPACJĘ, ABY ZAGRAĆ PONOWNIE", self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 3, self.WYSOKOSC_OKNA // 2 + self.WYSOKOSC_OKNA // 3, False)
+        self.wyswietl_slowo("NACIŚNIJ SPACJĘ, ABY WYJŚĆ", self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 3, self.WYSOKOSC_OKNA // 2 + self.WYSOKOSC_OKNA // 3, False)
 
         with open("wyniki.txt", "w") as plik:
             plik.write(str(gra.slowa_na_minute))
