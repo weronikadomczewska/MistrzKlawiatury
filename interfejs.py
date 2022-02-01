@@ -49,7 +49,7 @@ class Interfejs():
             # NOTE: jak już narysowaliśmy, to RAZ wyświetlamy to co narysowaliśmy
             pygame.display.update()
                 
-    def wyswietl_slowo(self, slowo, rodzaj_czcionki, x, y, mala_czcionka=True):
+    def wyswietl_slowo(self, slowo, x, y, mala_czcionka=True):
         if mala_czcionka:
             napis = self.czcionka_mala.render(slowo, True, self.KOLOR_LITER)
         else:
@@ -58,8 +58,8 @@ class Interfejs():
 
     def rysuj_scene_poczatek(self):
         self.okno.fill(self.KOLOR_TLA)
-        self.wyswietl_slowo("MISTRZ KLAWIATURY", self.TYP_CZCIONKI, self.SZEROKOSC_OKNA // 3, self.WYSOKOSC_OKNA // 10)
-        self.wyswietl_slowo("Naciśnij spację, aby rozpocząć", self.TYP_CZCIONKI, self.SZEROKOSC_OKNA // 5, self.WYSOKOSC_OKNA // 2, False)
+        self.wyswietl_slowo("MISTRZ KLAWIATURY", self.SZEROKOSC_OKNA // 3, self.WYSOKOSC_OKNA // 10)
+        self.wyswietl_slowo("Naciśnij spację, aby rozpocząć", self.SZEROKOSC_OKNA // 5, self.WYSOKOSC_OKNA // 2, False)
 
     def rysuj_scene_gra(self, gra):
         self.okno.fill(self.KOLOR_TLA)
@@ -78,13 +78,13 @@ class Interfejs():
                 y += wysokosc_slowa 
                 x = 0
 
-            self.wyswietl_slowo(slowo + " ", self.TYP_CZCIONKI, x, y)
+            self.wyswietl_slowo(slowo + " ", x, y)
             x += szerokosc_slowa
 
     def rysuj_scene_koniec(self, gra):
         self.okno.fill(self.KOLOR_TLA)
-        self.wyswietl_slowo("KONIEC GRY", self.TYP_CZCIONKI, self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 8, self.WYSOKOSC_OKNA // 10, False)
-        self.wyswietl_slowo(f"Słowa na minutę (WPM): {gra.wpisane_slowa // 60}", self.TYP_CZCIONKI, self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 4, self.WYSOKOSC_OKNA // 5, False)
+        self.wyswietl_slowo("KONIEC GRY", self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 8, self.WYSOKOSC_OKNA // 10, False)
+        self.wyswietl_slowo(f"Słowa na minutę (WPM): {gra.wpisane_slowa // 60}", self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 4, self.WYSOKOSC_OKNA // 5, False)
 
         try:
             ostatni_wynik = ""
@@ -93,10 +93,10 @@ class Interfejs():
         except:
             ostatni_wynik = "0"
 
-        self.wyswietl_slowo(f"Słowa na minutę (WPM): {gra.slowa_na_minute}", self.TYP_CZCIONKI, self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 4, self.WYSOKOSC_OKNA // 5, False)
-        self.wyswietl_slowo(f"Ostatni wynik: {ostatni_wynik}", self.TYP_CZCIONKI, self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 4, self.WYSOKOSC_OKNA // 3, False)
+        self.wyswietl_slowo(f"Słowa na minutę (WPM): {gra.slowa_na_minute}", self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 4, self.WYSOKOSC_OKNA // 5, False)
+        self.wyswietl_slowo(f"Ostatni wynik: {ostatni_wynik}", self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 4, self.WYSOKOSC_OKNA // 3, False)
 
-        self.wyswietl_slowo("NACIŚNIJ SPACJĘ, ABY ZAGRAĆ PONOWNIE", self.TYP_CZCIONKI, self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 3, self.WYSOKOSC_OKNA // 2 + self.WYSOKOSC_OKNA // 3, False)
+        self.wyswietl_slowo("NACIŚNIJ SPACJĘ, ABY ZAGRAĆ PONOWNIE", self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 3, self.WYSOKOSC_OKNA // 2 + self.WYSOKOSC_OKNA // 3, False)
 
         with open("wyniki.txt", "w") as plik:
             plik.write(str(gra.slowa_na_minute))
