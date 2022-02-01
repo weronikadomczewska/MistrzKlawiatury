@@ -5,7 +5,7 @@ from gra import Gra
 class Interfejs():
 
     ROZMIAR_CZCIONKI_SLOWA = 20
-    ROZMIAR_CZCIONKI_POLECENIA = 20
+    ROZMIAR_CZCIONKI_POLECENIA = 24
     TYP_CZCIONKI = "couriernew"
     SZEROKOSC_OKNA = 600
     WYSOKOSC_OKNA = 400
@@ -15,6 +15,9 @@ class Interfejs():
     def __init__(self, gra : Gra) -> None:
 
         pygame.init()
+
+        #system wysyła litery, którym odpowiadają klawisze na klawiaturze
+        pygame.key.start_text_input()
 
         #tworzenie i edycja okna gry
         
@@ -27,15 +30,17 @@ class Interfejs():
 
         self.petla_gry(gra)
 
-    def petla_gry(self, gra):
+    def petla_gry(self, gra : Gra):
         while True:
             # NOTE: obsługujemy zdarzenia
             for zdarzenie in pygame.event.get():
                 if zdarzenie.type == pygame.QUIT:
                     pygame.quit()
                     quit()
-                if zdarzenie.type == pygame.KEYDOWN:
-                    gra.nacisnieto_klawisz(zdarzenie.key)
+                if zdarzenie.type == pygame.KEYDOWN and zdarzenie.key == pygame.K_BACKSPACE:
+                    gra.usun_litere()
+                if zdarzenie.type == pygame.TEXTINPUT:
+                    gra.nacisnieto_klawisz(zdarzenie.text)
             # NOTE: na podstawie stanu gry rysujemy konkretną scenę
             if gra.stan == Gra.POCZATEK:
                 self.rysuj_scene_poczatek()
@@ -61,7 +66,7 @@ class Interfejs():
         self.wyswietl_slowo("MISTRZ KLAWIATURY", self.SZEROKOSC_OKNA // 3, self.WYSOKOSC_OKNA // 10)
         self.wyswietl_slowo("Naciśnij spację, aby rozpocząć", self.SZEROKOSC_OKNA // 5, self.WYSOKOSC_OKNA // 2, False)
 
-    def rysuj_scene_gra(self, gra):
+    def rysuj_scene_gra(self, gra : Gra):
         self.okno.fill(self.KOLOR_TLA)
         pygame.draw.line(self.okno, self.KOLOR_LITER, (0, self.WYSOKOSC_OKNA - self.WYSOKOSC_OKNA // 5), (self.SZEROKOSC_OKNA, self.WYSOKOSC_OKNA - self.WYSOKOSC_OKNA //5))
 
@@ -80,6 +85,12 @@ class Interfejs():
 
             self.wyswietl_slowo(slowo + " ", x, y)
             x += szerokosc_slowa
+
+        #rysowanie text boxa
+        tekst_x = 50
+        tekst_y = self.WYSOKOSC_OKNA - (self.WYSOKOSC_OKNA // 5 - self.WYSOKOSC_OKNA // 10)
+
+        self.wyswietl_slowo(gra.pisane_slowo, tekst_x, tekst_y)
 
     def rysuj_scene_koniec(self, gra):
         self.okno.fill(self.KOLOR_TLA)

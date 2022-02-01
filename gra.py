@@ -1,5 +1,6 @@
 import pygame
 from random import choice
+import time
 
 class Gra():
 
@@ -10,9 +11,8 @@ class Gra():
     def __init__(self) -> None:
         self.wpisane_slowa = 0
         self.pisane_slowo = ""
-        self.teksty_na_ekranie = []
         self.stan = 0
-        self.czas_rozgrywki = 0
+        self.poczatek_rozgrywki = time.time()
 
         self.slowa = []
         with open("slowa.txt", "r", encoding="UTF-8") as plik:
@@ -22,15 +22,17 @@ class Gra():
 
     def nacisnieto_klawisz(self, klawisz):
         if self.stan == self.POCZATEK:
-            if klawisz == pygame.K_SPACE:
+            if klawisz == " ":
                 self.stan = self.GRA
         elif self.stan == self.GRA:
-            if self.wpisane_slowa == 50:
-                self.stan = self.KONIEC
+            self.pisane_slowo += klawisz
         elif self.stan == self.KONIEC:
-            if klawisz == pygame.K_SPACE:
-                self.stan = self.POCZATEK
+            if klawisz == " ":
+                exit(0)
         else:
             raise Exception("coś poszło bardzo nie tak")
 
+    def usun_litere(self):
+        if self.pisane_slowo:
+            self.pisane_slowo = self.pisane_slowo[:-1]
     
