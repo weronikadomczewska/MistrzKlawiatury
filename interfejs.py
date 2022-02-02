@@ -1,5 +1,4 @@
 import pygame
-from random import choice
 from gra import Gra
 
 class Interfejs():
@@ -101,5 +100,4 @@ class Interfejs():
 
         self.wyswietl_slowo("NACIŚNIJ SPACJĘ, ABY WYJŚĆ", self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 3, self.WYSOKOSC_OKNA // 2 + self.WYSOKOSC_OKNA // 3, False)
 
-        with open("wyniki.txt", "w") as plik:
-            plik.write(str(gra.slowa_na_minute))
+
