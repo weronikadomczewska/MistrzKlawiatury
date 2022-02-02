@@ -59,12 +59,21 @@ class Interfejs():
         else:
             napis = self.czcionka_duza.render(slowo, True, self.KOLOR_LITER)
         self.okno.blit(napis, (x, y))
+        
+    def szerokosc_napisu(self, slowo, mala_czcionka=True):
+        if mala_czcionka:
+            napis = self.czcionka_mala.render(slowo, True, self.KOLOR_LITER)
+        else:
+            napis = self.czcionka_duza.render(slowo, True, self.KOLOR_LITER)
+        return napis.get_width()
 
     def rysuj_scene_poczatek(self):
         self.okno.fill(self.KOLOR_TLA)
-        self.wyswietl_slowo("MISTRZ KLAWIATURY", self.SZEROKOSC_OKNA // 3, self.WYSOKOSC_OKNA // 10)
-        self.wyswietl_slowo("Naciśnij spację, aby rozpocząć", self.SZEROKOSC_OKNA // 5, self.WYSOKOSC_OKNA // 2, False)
-
+        szerokosc_tytul = self.szerokosc_napisu("MISTRZ KLAWIATURY", False)
+        self.wyswietl_slowo("MISTRZ KLAWIATURY", self.SZEROKOSC_OKNA // 2 - szerokosc_tytul // 2, self.WYSOKOSC_OKNA // 3, False)
+        szerokosc_komunikat = self.szerokosc_napisu("NACIŚNIJ SPACJĘ, ŻEBY ROZPOCZĄĆ", False)
+        self.wyswietl_slowo("NACIŚNIJ SPACJĘ, ŻEBY ROZPOCZĄĆ", self.SZEROKOSC_OKNA // 2 - szerokosc_komunikat // 2, self.WYSOKOSC_OKNA // 2, False)
+        
     def rysuj_scene_gra(self, gra : Gra):
         self.okno.fill(self.KOLOR_TLA)
         pygame.draw.line(self.okno, self.KOLOR_LITER, (0, self.WYSOKOSC_OKNA - self.WYSOKOSC_OKNA // 5), (self.SZEROKOSC_OKNA, self.WYSOKOSC_OKNA - self.WYSOKOSC_OKNA //5))
@@ -86,18 +95,24 @@ class Interfejs():
             x += szerokosc_slowa
 
         #rysowanie text boxa
-        tekst_x = 50
+        szerokosc_pisane_slowo = self.szerokosc_napisu(gra.pisane_slowo)
+        tekst_x = self.SZEROKOSC_OKNA // 2 - szerokosc_pisane_slowo // 2
         tekst_y = self.WYSOKOSC_OKNA - (self.WYSOKOSC_OKNA // 5 - self.WYSOKOSC_OKNA // 10)
 
         self.wyswietl_slowo(gra.pisane_slowo, tekst_x, tekst_y)
 
     def rysuj_scene_koniec(self, gra):
         self.okno.fill(self.KOLOR_TLA)
-        self.wyswietl_slowo("KONIEC GRY", self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 8, self.WYSOKOSC_OKNA // 10, False)
 
-        self.wyswietl_slowo(f"Słowa na minutę (WPM): {gra.slowa_na_minute}", self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 4, self.WYSOKOSC_OKNA // 5, False)
-        self.wyswietl_slowo(f"Ostatni wynik: {gra.ostatni_wynik}", self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 4, self.WYSOKOSC_OKNA // 3, False)
+        szerokosc_koniec_gry = self.szerokosc_napisu("KONIEC GRY", False)
+        self.wyswietl_slowo("KONIEC GRY", self.SZEROKOSC_OKNA // 2 - szerokosc_koniec_gry // 2, self.WYSOKOSC_OKNA // 3, False)
 
-        self.wyswietl_slowo("NACIŚNIJ SPACJĘ, ABY WYJŚĆ", self.SZEROKOSC_OKNA // 2 - self.SZEROKOSC_OKNA // 3, self.WYSOKOSC_OKNA // 2 + self.WYSOKOSC_OKNA // 3, False)
+        szerokosc_wpm = self.szerokosc_napisu("Słowa na minutę (WPM):")
+        self.wyswietl_slowo(f"Słowa na minutę (WPM): {gra.slowa_na_minute}", self.SZEROKOSC_OKNA // 2 - szerokosc_wpm // 2, self.WYSOKOSC_OKNA // 3 + self.WYSOKOSC_OKNA // 10)
 
+        szerokosc_ostatni_wynik = self.szerokosc_napisu(f"Ostatni wynik: {gra.ostatni_wynik}")
+        self.wyswietl_slowo(f"Ostatni wynik: {gra.ostatni_wynik}", self.SZEROKOSC_OKNA // 2 - szerokosc_ostatni_wynik // 2, self.WYSOKOSC_OKNA // 3 + 2 * self.WYSOKOSC_OKNA // 10)
+
+        szerokosc_wyjscie = self.szerokosc_napisu("NACIŚNIJ SPACJĘ, ABY WYJŚĆ", False)
+        self.wyswietl_slowo("NACIŚNIJ SPACJĘ, ABY WYJŚĆ", self.SZEROKOSC_OKNA // 2 - szerokosc_wyjscie // 2, self.WYSOKOSC_OKNA // 3 + 3 * self.WYSOKOSC_OKNA // 10, False)
 
