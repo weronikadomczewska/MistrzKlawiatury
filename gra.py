@@ -12,16 +12,15 @@ class Gra():
     ILOSC_SLOW = 5
 
     def __init__(self) -> None:
-        #self.wpisane_slowa = 0
         self.pisane_slowo = ""
         self.stan = 0
         self.poczatek_rozgrywki = time.time()
 
-        self.slowa = []
+        slowa = []
         with open("slowa.txt", "r", encoding="UTF-8") as plik:
-            self.slowa = [s.strip() for s in plik]
+            slowa = [s.strip() for s in plik]
 
-        self.wylosowane_slowa = sample(self.slowa, self.ILOSC_SLOW)
+        self.wylosowane_slowa = sample(slowa, self.ILOSC_SLOW)
 
     def sprawdz_poprawnosc_slowa(self):
         if self.pisane_slowo in self.wylosowane_slowa:
@@ -39,6 +38,7 @@ class Gra():
                 plik.write(str(self.slowa_na_minute))           
             self.stan = self.KONIEC
 
+    #funkcja, która obsługuje zdarzenie naciśnięcia klawisza przez użytkownika
     def nacisnieto_klawisz(self, klawisz):
         if self.stan == self.POCZATEK:
             if klawisz == " ":
