@@ -1,4 +1,3 @@
-import pygame
 from random import sample
 import time
 
@@ -13,7 +12,7 @@ class Gra():
     ILOSC_SLOW = 5
 
     def __init__(self) -> None:
-        self.wpisane_slowa = 0
+        #self.wpisane_slowa = 0
         self.pisane_slowo = ""
         self.stan = 0
         self.poczatek_rozgrywki = time.time()
