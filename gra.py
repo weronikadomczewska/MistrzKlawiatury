@@ -16,10 +16,24 @@ class Gra():
         self.stan = 0
         self.poczatek_rozgrywki = time.time()
 
+        # slowa = []
+        # with open("slowa.txt", "r", encoding="UTF-8") as plik:
+        #     for s in plik:
+        #         slowa.append(s.strip())
+
+        
+        #Inny sposób na wczytanie danych z pliku
         slowa = []
-        with open("slowa.txt", "r", encoding="UTF-8") as plik:
+        plik = open("slowa.txt", "r", encoding="UTF-8")
+        try:
             for s in plik:
                 slowa.append(s.strip())
+        except:
+            slowa = 0
+        finally:
+            plik.close()
+        
+        
 
         self.wylosowane_slowa = sample(slowa, self.ILOSC_SLOW)
 
