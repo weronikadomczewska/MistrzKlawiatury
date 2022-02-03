@@ -1,7 +1,5 @@
 piękna
 łagodna
-zła
-okropna
 wspaniała
 ładna
 zimno
@@ -122,6 +120,4 @@ Finlandia
 Norwegia
 Rosja
 Kazachstan
-Islandia
-dziekan
-gruz	
+Islandia	

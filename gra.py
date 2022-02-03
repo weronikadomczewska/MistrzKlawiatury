@@ -4,10 +4,12 @@ import time
 
 class Gra():
 
+    #stany gry
     POCZATEK = 0
     GRA = 1
     KONIEC = 2
 
+    #ilość słów, które chcemy wyświetlać na ekranie
     ILOSC_SLOW = 5
 
     def __init__(self) -> None:
@@ -51,6 +53,7 @@ class Gra():
         else:
             raise Exception("coś poszło bardzo nie tak")
 
+    #funkcja obsługująca naciśnięcie klawisza backspace
     def usun_litere(self):
         if self.pisane_slowo:
             self.pisane_slowo = self.pisane_slowo[:-1]
