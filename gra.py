@@ -18,7 +18,8 @@ class Gra():
 
         slowa = []
         with open("slowa.txt", "r", encoding="UTF-8") as plik:
-            slowa = [s.strip() for s in plik]
+            for s in plik:
+                slowa.append(s.strip())
 
         self.wylosowane_slowa = sample(slowa, self.ILOSC_SLOW)
 
@@ -54,7 +55,7 @@ class Gra():
 
     #funkcja obsługująca naciśnięcie klawisza backspace
     def usun_litere(self):
-        if self.pisane_slowo:
+        if self.pisane_slowo: # można również napisać if len(self.pisane_slowo) != 0
             self.pisane_slowo = self.pisane_slowo[:-1]
 
     
